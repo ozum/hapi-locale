@@ -31,7 +31,8 @@ module.exports = function defineRoutes(plugins) {
                 var plugin = request.server.plugins['hapi-locale'];
                 reply({
                     getLocales: plugin.getLocales(),
-                    getLocale: plugin.getLocale(request, reply)
+                    getLocale: plugin.getLocale(request, reply),
+                    getDefaultLocale: plugin.getDefaultLocale()
                 });
             }
         }

@@ -32,7 +32,8 @@ describe('hapi-locale', function() {
         server.inject(options, function (response) {
             assert.deepEqual(response.result, {
                 getLocales: [ 'en_US', 'tr_TR', 'fr_FR' ],
-                getLocale: 'tr_TR'
+                getLocale: 'tr_TR',
+                getDefaultLocale: 'en_US'
             });
             done();
         });
