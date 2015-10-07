@@ -7,13 +7,15 @@ var assert  = require('chai').assert,
 
 
 describe('hapi-locale with config file', function() {
+    "use strict";
+
     var plugins = [
         {
             register: require('../index.js'),
             options: {
                 configFile: path.join(__dirname, 'config-files', 'config-default.json'),
                 scan: {
-                    path: path.join(__dirname, 'locale')
+                    path: path.join(__dirname, 'locales')
                 }
             }
         }
@@ -21,8 +23,6 @@ describe('hapi-locale with config file', function() {
 
     var server = require('./hapi/create-server.js')(plugins);
 
-
-    "use strict";
     it('should determine language from query', function (done) {
         var options = {
             method: "GET",
@@ -73,7 +73,7 @@ describe('hapi-locale with scan dir', function() {
             options: {
                 configFile: path.join(__dirname, 'config-files', 'config-empty.json'),
                 scan: {
-                    path: path.join(__dirname, 'locale')
+                    path: path.join(__dirname, 'locales')
                 }
             }
         }

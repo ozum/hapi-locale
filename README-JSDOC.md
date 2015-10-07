@@ -6,7 +6,9 @@ Hapi.js plugin for helping to determine requested locale using configuration. It
 
 Description
 ===========
-This plugin determines which locale you should serve to incoming request by looking several criteria of the request. Every aspect of the plugin can be configured with options. Sensible defaults are tried to be provided.
+This plugin determines requested loclale and optionally adds functions to request object to get it. Examines incoming request by looking several criteria of the request. Every aspect of the plugin can be configured with options. Sensible defaults are tried to be provided.
+
+It is also possible to prevent adding functions to request not to pollute request object. In this case hapi exposed functions can be used.
 
 Synopsis
 ========
@@ -95,6 +97,15 @@ Event Times
 ===========
 Available locales are determined one time during server start plugin registration. Per request operations happens on event set by `options.onEvent`.
 
+Exposed Functions & Attributes
+==============================
+This plugin exposes some functions and attributes using server.expose mechanism of hapi.js. They are documented under API section's exposed part. See there for details.
+
+    // This function may be used to access requested locale manually without polluting request object.
+    var locale  = request.server.plugins['hapi-locale'].getLocale(request, reply);
+        
+    var locales = request.server.plugins['hapi-locale'].getLocales();   // ['tr_TR', 'en_US'] etc.
+    
 Examples
 ========
 
@@ -157,7 +168,7 @@ Examples
                 configFile          : path.join(rootDir, 'package.json'),
                 configKey           : 'locales',
                 scan                : {
-                    path        : path.join(rootDir, 'locale'),
+                    path        : path.join(rootDir, 'locales'),
                     fileType    : 'json',
                     directories : true,
                     exclude     : ['templates', 'template.json']
@@ -201,6 +212,19 @@ Examples
         });
     });
 
+
+### Routes
+
+| **ROUTE**           | **REQUEST**                   | **HEADER**                | **LOCALE**      | **REASON**
+|---------------------|-------------------------------|---------------------------|-----------------|-----------------------|
+| /{lang}/account     | GET /en_US/account            |                           | en_US           | Path                  |
+| /{lang}/account     | GET /tr_TR/account?lang=fr_FR | accept-language=jp_JP     | tr_TR           | Path has more priority|
+| /api/{lang}/account | GET api/en_US/account         |                           | en_US           | Path                  |
+| /account            | GET /account?lang=en_US       |                           | en_US           | Query                 |
+| /api/account        | GET api/account?lang=en_US    |                           | en_US           | Query                 |
+| /account            | GET /account                  | accept-language=en_US     | en_US           | Header                |
+| /{lang}/account     | GET /nonsense/account         |                           | *404*           | Not found URL         |
+| /account            | GET account?lang=nonsense     |                           | *Default Locale*| Not found URL         |
 
 
 API

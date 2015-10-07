@@ -14,7 +14,7 @@ var defaultOptions      = module.__get__('defaultOptions');
 var options             = Hoek.applyToDefaults(defaultOptions, {
     configFile: path.join(__dirname, 'config-files', 'config-default.json'),
     scan: {
-        path: path.join(__dirname, 'locale')
+        path: path.join(__dirname, 'locales')
     }
 });
 
@@ -28,7 +28,7 @@ describe('scan', function() {
     it('should scan only files', function() {
         var localOptions = Hoek.applyToDefaults(options, {
             scan: {
-                path: path.join(__dirname, 'locale'),
+                path: path.join(__dirname, 'locales'),
                 directories: false
             }
         });

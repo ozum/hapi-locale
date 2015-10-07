@@ -6,7 +6,9 @@ Hapi.js plugin for helping to determine requested locale using configuration. It
 
 Description
 ===========
-This plugin determines which locale you should serve to incoming request by looking several criteria of the request. Every aspect of the plugin can be configured with options. Sensible defaults are tried to be provided.
+This plugin determines requested loclale and optionally adds functions to request object to get it. Examines incoming request by looking several criteria of the request. Every aspect of the plugin can be configured with options. Sensible defaults are tried to be provided.
+
+It is also possible to prevent adding functions to request not to pollute request object. In this case hapi exposed functions can be used.
 
 Synopsis
 ========
@@ -95,6 +97,15 @@ Event Times
 ===========
 Available locales are determined one time during server start plugin registration. Per request operations happens on event set by `options.onEvent`.
 
+Exposed Functions & Attributes
+==============================
+This plugin exposes some functions and attributes using server.expose mechanism of hapi.js. They are documented under API section's exposed part. See there for details.
+
+    // This function may be used to access requested locale manually without polluting request object.
+    var locale  = request.server.plugins['hapi-locale'].getLocale(request, reply);
+        
+    var locales = request.server.plugins['hapi-locale'].getLocales();   // ['tr_TR', 'en_US'] etc.
+    
 Examples
 ========
 
@@ -157,7 +168,7 @@ Examples
                 configFile          : path.join(rootDir, 'package.json'),
                 configKey           : 'locales',
                 scan                : {
-                    path        : path.join(rootDir, 'locale'),
+                    path        : path.join(rootDir, 'locales'),
                     fileType    : 'json',
                     directories : true,
                     exclude     : ['templates', 'template.json']
@@ -202,24 +213,46 @@ Examples
     });
 
 
+### Routes
+
+| **ROUTE**           | **REQUEST**                   | **HEADER**                | **LOCALE**      | **REASON**
+|---------------------|-------------------------------|---------------------------|-----------------|-----------------------|
+| /{lang}/account     | GET /en_US/account            |                           | en_US           | Path                  |
+| /{lang}/account     | GET /tr_TR/account?lang=fr_FR | accept-language=jp_JP     | tr_TR           | Path has more priority|
+| /api/{lang}/account | GET api/en_US/account         |                           | en_US           | Path                  |
+| /account            | GET /account?lang=en_US       |                           | en_US           | Query                 |
+| /api/account        | GET api/account?lang=en_US    |                           | en_US           | Query                 |
+| /account            | GET /account                  | accept-language=en_US     | en_US           | Header                |
+| /{lang}/account     | GET /nonsense/account         |                           | *404*           | Not found URL         |
+| /account            | GET account?lang=nonsense     |                           | *Default Locale*| Not found URL         |
+
 
 API
 ===
 
-<a name="module_hapiLocale"></a>
-## hapiLocale
+## Modules
+<dl>
+<dt><a href="#module_hapi-locale">hapi-locale</a></dt>
+<dd></dd>
+<dt><a href="#module_exposed">exposed</a></dt>
+<dd><p>Exposed functions and attributes are listed under exposed name.
+To access those attributes <code>request.server.plugins[&#39;hapi-locale&#39;]</code> can be used.</p>
+</dd>
+</dl>
+<a name="module_hapi-locale"></a>
+## hapi-locale
 
-* [hapiLocale](#module_hapiLocale)
+* [hapi-locale](#module_hapi-locale)
   * _static_
-    * [.register(server, options, next)](#module_hapiLocale.register)
+    * [.register(server, options, next)](#module_hapi-locale.register)
   * _inner_
-    * [~PluginOptions](#module_hapiLocale..PluginOptions) : <code>Object</code>
+    * [~PluginOptions](#module_hapi-locale..PluginOptions) : <code>Object</code>
 
-<a name="module_hapiLocale.register"></a>
-### hapiLocale.register(server, options, next)
+<a name="module_hapi-locale.register"></a>
+### hapi-locale.register(server, options, next)
 Hapi plugin function which adds i18n support to request and response objects.
 
-**Kind**: static method of <code>[hapiLocale](#module_hapiLocale)</code>  
+**Kind**: static method of <code>[hapi-locale](#module_hapi-locale)</code>  
 <table>
   <thead>
     <tr>
@@ -239,11 +272,11 @@ Hapi plugin function which adds i18n support to request and response objects.
     </tr>  </tbody>
 </table>
 
-<a name="module_hapiLocale..PluginOptions"></a>
-### hapiLocale~PluginOptions : <code>Object</code>
+<a name="module_hapi-locale..PluginOptions"></a>
+### hapi-locale~PluginOptions : <code>Object</code>
 Plugin configuration options.
 
-**Kind**: inner typedef of <code>[hapiLocale](#module_hapiLocale)</code>  
+**Kind**: inner typedef of <code>[hapi-locale](#module_hapi-locale)</code>  
 **Properties**
 
 <table>
@@ -289,6 +322,52 @@ Plugin configuration options.
     <td>callback</td><td><code>function</code> | <code>string</code></td><td><code>setLocale</code></td><td>Callback method to set locale. If given as function called directly. If given as string called as a method of request object.</td>
     </tr><tr>
     <td>onEvent</td><td><code>string</code></td><td><code>&quot;onPreAuth&quot;</code></td><td>Event on which locale determination process is fired.</td>
+    </tr>  </tbody>
+</table>
+
+<a name="module_exposed"></a>
+## exposed
+Exposed functions and attributes are listed under exposed name.
+To access those attributes `request.server.plugins['hapi-locale']` can be used.
+
+**Example**  
+```js
+var locales = request.server.plugins['hapi-locale'].getLocales(); // ['tr_TR', 'en_US'] etc.
+```
+
+* [exposed](#module_exposed)
+  * [~getLocales()](#module_exposed..getLocales) ⇒ <code>Array.&lt;string&gt;</code>
+  * [~getLocale(request, reply)](#module_exposed..getLocale) ⇒ <code>string</code>
+
+<a name="module_exposed..getLocales"></a>
+### exposed~getLocales() ⇒ <code>Array.&lt;string&gt;</code>
+Returns all available locales as an array.
+
+**Kind**: inner method of <code>[exposed](#module_exposed)</code>  
+**Example**  
+```js
+var locales = request.server.plugins['hapi-locale'].getLocales(); // ['tr_TR', 'en_US'] etc.
+```
+<a name="module_exposed..getLocale"></a>
+### exposed~getLocale(request, reply) ⇒ <code>string</code>
+Returns requested language. Can be used if developer does not want to pollute request object and want to get locale manually.
+It may be best interest to store result and use it during request instead of calling this function repetitively to prevent repeated calculations.
+
+**Kind**: inner method of <code>[exposed](#module_exposed)</code>  
+**Returns**: <code>string</code> - Locale  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>request</td><td><code>Object</code></td><td><p>Hapi.js request object</p>
+</td>
+    </tr><tr>
+    <td>reply</td><td><code>Object</code></td><td><p>Hapi.js reply object</p>
+</td>
     </tr>  </tbody>
 </table>
 

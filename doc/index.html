@@ -45,7 +45,8 @@
     <section>
         <article><h1>hapi-locale</h1><p>Hapi.js plugin for helping to determine requested locale using configuration. It is used by hapi18n plugin.</p>
 <p><strong>This module is in alpha version. Incompatible changes may happen in future versions. Providing options explicitly and not using default values may be a wise choice</strong></p>
-<h1>Description</h1><p>This plugin determines which locale you should serve to incoming request by looking several criteria of the request. Every aspect of the plugin can be configured with options. Sensible defaults are tried to be provided.</p>
+<h1>Description</h1><p>This plugin determines requested loclale and optionally adds functions to request object to get it. Examines incoming request by looking several criteria of the request. Every aspect of the plugin can be configured with options. Sensible defaults are tried to be provided.</p>
+<p>It is also possible to prevent adding functions to request not to pollute request object. In this case hapi exposed functions can be used.</p>
 <h1>Synopsis</h1><p>Create server</p>
 <pre class="prettyprint source"><code>...
 var plugins = ['hapi-locale']
@@ -91,7 +92,11 @@ server.register(plugins, function (err) {
 <h3>4. Getter and Setter Methods</h3><p>Plugin adds getter and setter methods to request object. Name of the methods are set via <code>options.createGetter</code> and <code>options.createSetter</code> options. If those options are null or there are already methods available with given names in request object, no methods will be added. Default values are <code>request.i18n.getLocale</code> and <code>request.i18n.setLocale</code>.</p>
 <h3>5. Callback is called</h3><p>Callback is called with locale name as only parameter. Callback name is configured via <code>options.callback</code>. If callback name is given as a function reference, it is called directly. If it is given as string it is called as a chained method of request object. Default is &quot;i18n.setLocale&quot; which results as <code>request.i18n.setLocale</code>. It is possible to use a chained method name such as &quot;i18n.setLocale&quot; which results as <code>request.i18n.setLocale</code>.</p>
 <h1>Event Times</h1><p>Available locales are determined one time during server start plugin registration. Per request operations happens on event set by <code>options.onEvent</code>.</p>
-<h1>Examples</h1><h3>Use with default options:</h3><pre class="prettyprint source"><code>var server  = new hapi.Server(),
+<h1>Exposed Functions &amp; Attributes</h1><p>This plugin exposes some functions and attributes using server.expose mechanism of hapi.js. They are documented under API section's exposed part. See there for details.</p>
+<pre class="prettyprint source"><code>// This function may be used to access requested locale manually without polluting request object.
+var locale  = request.server.plugins['hapi-locale'].getLocale(request, reply);
+
+var locales = request.server.plugins['hapi-locale'].getLocales();   // ['tr_TR', 'en_US'] etc.</code></pre><h1>Examples</h1><h3>Use with default options:</h3><pre class="prettyprint source"><code>var server  = new hapi.Server(),
     path    = require('path');
 
 server.connection({
@@ -144,7 +149,7 @@ var plugins = [
             configFile          : path.join(rootDir, 'package.json'),
             configKey           : 'locales',
             scan                : {
-                path        : path.join(rootDir, 'locale'),
+                path        : path.join(rootDir, 'locales'),
                 fileType    : 'json',
                 directories : true,
                 exclude     : ['templates', 'template.json']
@@ -186,7 +191,76 @@ server.register(plugins, function (err) {
     server.start(function () {
         console.log('Server started at: ' + server.info.uri);
     });
-});</code></pre><h1>API</h1></article>
+});</code></pre><h3>Routes</h3><table>
+<thead>
+<tr>
+<th><strong>ROUTE</strong></th>
+<th><strong>REQUEST</strong></th>
+<th><strong>HEADER</strong></th>
+<th><strong>LOCALE</strong></th>
+<th><strong>REASON</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/{lang}/account</td>
+<td>GET /en_US/account</td>
+<td></td>
+<td>en_US</td>
+<td>Path</td>
+</tr>
+<tr>
+<td>/{lang}/account</td>
+<td>GET /tr_TR/account?lang=fr_FR</td>
+<td>accept-language=jp_JP</td>
+<td>tr_TR</td>
+<td>Path has more priority</td>
+</tr>
+<tr>
+<td>/api/{lang}/account</td>
+<td>GET api/en_US/account</td>
+<td></td>
+<td>en_US</td>
+<td>Path</td>
+</tr>
+<tr>
+<td>/account</td>
+<td>GET /account?lang=en_US</td>
+<td></td>
+<td>en_US</td>
+<td>Query</td>
+</tr>
+<tr>
+<td>/api/account</td>
+<td>GET api/account?lang=en_US</td>
+<td></td>
+<td>en_US</td>
+<td>Query</td>
+</tr>
+<tr>
+<td>/account</td>
+<td>GET /account</td>
+<td>accept-language=en_US</td>
+<td>en_US</td>
+<td>Header</td>
+</tr>
+<tr>
+<td>/{lang}/account</td>
+<td>GET /nonsense/account</td>
+<td></td>
+<td><em>404</em></td>
+<td>Not found URL</td>
+</tr>
+<tr>
+<td>/account</td>
+<td>GET account?lang=nonsense</td>
+<td></td>
+<td><em>Default Locale</em></td>
+<td>Not found URL</td>
+</tr>
+</tbody>
+</table>
+<h1>API</h1></article>
     </section>
 
 
@@ -197,13 +271,13 @@ server.register(plugins, function (err) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-hapiLocale.html">hapiLocale</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-exposed.html">exposed</a></li><li><a href="module-hapi-locale.html">hapi-locale</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Wed Oct 07 2015 10:33:17 GMT+0300 (EEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Wed Oct 07 2015 14:02:28 GMT+0300 (EEST)
 </footer>
 
 <script> prettyPrint(); </script>

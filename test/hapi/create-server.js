@@ -23,6 +23,17 @@ module.exports = function defineRoutes(plugins) {
             handler: function(request, reply) {
                 reply({ locale: request.i18n.getLocale() });
             }
+        },
+        {
+            path: "/exposed",
+            method: "GET",
+            handler: function(request, reply) {
+                var plugin = request.server.plugins['hapi-locale'];
+                reply({
+                    getLocales: plugin.getLocales(),
+                    getLocale: plugin.getLocale(request, reply)
+                });
+            }
         }
     ]);
 
