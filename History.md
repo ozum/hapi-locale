@@ -5,6 +5,9 @@ History & Notes
 ================
 Note: Simple documentation updates are not listed here.
 
+#### 0.2.1 / 2015-10-07
+* Changed: options.createGetter and options.createSetter are renamed as options.createGetterOn and options.createSetterOn
+
 #### 0.2.0 / 2015-10-07
 * Added: getDefaultLocale() exposed function.
 

@@ -318,9 +318,9 @@ Plugin configuration options.
     </tr><tr>
     <td>throw404</td><td><code>boolean</code></td><td></td><td>Whether to throw 404 not found if locale is not found. Does not apply path parameters, it always throws 404.</td>
     </tr><tr>
-    <td>createGetter</td><td><code>string</code></td><td><code>&quot;getLocale&quot;</code></td><td>If not exists, creates a getter method with this name on request object to get current locale.</td>
+    <td>createGetterOn</td><td><code>string</code></td><td><code>&quot;getLocale&quot;</code></td><td>If not exists, creates a getter method with this name on request object to get current locale.</td>
     </tr><tr>
-    <td>createSetter</td><td><code>string</code></td><td><code>&quot;setLocale&quot;</code></td><td>If not exists, creates a setter method with this name on request object to set current locale.</td>
+    <td>createSetterOn</td><td><code>string</code></td><td><code>&quot;setLocale&quot;</code></td><td>If not exists, creates a setter method with this name on request object to set current locale.</td>
     </tr><tr>
     <td>callback</td><td><code>function</code> | <code>string</code></td><td><code>setLocale</code></td><td>Callback method to set locale. If given as function called directly. If given as string called as a method of request object.</td>
     </tr><tr>
@@ -388,6 +388,9 @@ It may be best interest to store result and use it during request instead of cal
 History & Notes
 ================
 Note: Simple documentation updates are not listed here.
+
+#### 0.2.1 / 2015-10-07
+* Changed: options.createGetter and options.createSetter are renamed as options.createGetterOn and options.createSetterOn
 
 #### 0.2.0 / 2015-10-07
 * Added: getDefaultLocale() exposed function.
