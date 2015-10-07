@@ -233,7 +233,8 @@ API
 ## Modules
 <dl>
 <dt><a href="#module_'hapi-locale'">'hapi-locale'</a></dt>
-<dd></dd>
+<dd><p>Plugin module to use in hapi.js applications to determine requested language.</p>
+</dd>
 <dt><a href="#module_exposed">exposed</a></dt>
 <dd><p>Exposed functions and attributes are listed under exposed name.
 To access those attributes <code>request.server.plugins[&#39;hapi-locale&#39;]</code> can be used.</p>
@@ -241,6 +242,8 @@ To access those attributes <code>request.server.plugins[&#39;hapi-locale&#39;]</
 </dl>
 <a name="module_'hapi-locale'"></a>
 ## 'hapi-locale'
+Plugin module to use in hapi.js applications to determine requested language.
+
 
 * ['hapi-locale'](#module_'hapi-locale')
   * _static_
@@ -377,6 +380,9 @@ It may be best interest to store result and use it during request instead of cal
 History & Notes
 ================
 Note: Simple documentation updates are not listed here.
+
+#### 0.1.0 / 2015-10-07
+* Added exposed functions. getLocale() and getLocales()
 
 #### 0.0.1 / 2015-10-06
 * Initial version.
