@@ -1,0 +1,32 @@
+{
+  "name": "hapi-locale",
+  "version": "0.0.1",
+  "description": "Hapi.js plugin for helping to determine requested locale using configuration.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ozum/hapi-locale.git"
+  },
+  "scripts": {
+    "doc": "rm -R doc; jsdoc -c jsdoc-conf.json README-JSDOC.md;    rm -f README.md;    jsdoc2md --no-gfm --src \"lib/**/*\" >JSDOC.md;    cat README-JSDOC.md JSDOC.md History.md LICENSE > README.md;    rm -r -f JSDOC.md;",
+    "test": "mocha"
+  },
+  "keywords": [
+    "hapi",
+    "i18n",
+    "locale"
+  ],
+  "author": "Özüm Eldoğan",
+  "license": "MIT",
+  "dependencies": {
+    "boom": "^2.9.0",
+    "lodash": "^3.10.1"
+  },
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "hapi": "^10.4.0",
+    "hoek": "^2.16.3",
+    "rewire": "^2.3.4",
+    "zoo-jsdoc": "0.0.1"
+  }
+}
