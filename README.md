@@ -50,6 +50,7 @@ Plugin
 4. (Optional) Adds getter and setter methods in request object: `request.i18n.getLocale` and `request.i18n.setLocale`.
 5. Callback is called.
 
+
 ### 1. Available locales
 
 Available locales are determined with methods in the following order. If one of the methods succeeds no other methods are tried. One or more steps may be cancelled via `options`. Available locales are searched one time during plugin registration.
@@ -59,6 +60,7 @@ Plugin
 1. Looks locales in plugin options `options.locales`.
 2. Looks `package.json` or other json file set by `options.configFile` and `options.configKey`. Key may be set with nested format such as 'pref.of.my.app.locales'.
 3. Scans path given by `options.scan.path` excluding files and directories given by `options.path.exclude`.
+
 
 ### 2. Requested locale(s)
 
@@ -70,6 +72,7 @@ Plugin:
 2. Looks query paramater such as `/member?lang=en_US`. Query parameter name can be set via `options.nameOf.query`.
 3. Looks `accept-language` header of request. Header name can be set via `options.nameOf.header`.
 
+
 ### 3. Match Requested locale
 
 Plugin tries to find first preferred locale which is available in application:
@@ -78,9 +81,11 @@ Plugin tries to find first preferred locale which is available in application:
 2. If no match is found plugin either throws 404 if `options.throw404` set true. If path parameter (url) is wrong, it always throws 404 overriding `options.throw404`
 3. If no 404 is thrown, default locale is used as a result. Default locale may set via `options.default`, otherwise first available locale is used as default.
 
+
 ### 4. Getter and Setter Methods
 
 Plugin adds getter and setter methods to request object. Name of the methods are set via `options.createGetter` and `options.createSetter` options. If those options are null or there are already methods available with given names in request object, no methods will be added. Default values are `request.i18n.getLocale` and `request.i18n.setLocale`.
+
 
 ### 5. Callback is called
 
