@@ -68,33 +68,28 @@ server.register(plugins, function (err) {
 <li>(Optional) Adds getter and setter methods in request object: <code>request.i18n.getLocale</code> and <code>request.i18n.setLocale</code>.</li>
 <li>Callback is called.</li>
 </ol>
-<p>###1. Available locales</p>
-<p>Available locales are determined with methods in the following order. If one of the methods succeeds no other methods are tried. One or more steps may be cancelled via <code>options</code>. Available locales are searched one time during plugin registration.</p>
+<h3>1. Available locales</h3><p>Available locales are determined with methods in the following order. If one of the methods succeeds no other methods are tried. One or more steps may be cancelled via <code>options</code>. Available locales are searched one time during plugin registration.</p>
 <p>Plugin</p>
 <ol>
 <li>Looks locales in plugin options <code>options.locales</code>.</li>
 <li>Looks <code>package.json</code> or other json file set by <code>options.configFile</code> and <code>options.configKey</code>. Key may be set with nested format such as 'pref.of.my.app.locales'.</li>
 <li>Scans path given by <code>options.scan.path</code> excluding files and directories given by <code>options.path.exclude</code>.</li>
 </ol>
-<p>###2. Requested locale(s)</p>
-<p>One or more locale may be preferred in requests. To determine most wanted locale for every request following steps are taken in order given. One or more steps may be cancelled via <code>options</code>.</p>
+<h3>2. Requested locale(s)</h3><p>One or more locale may be preferred in requests. To determine most wanted locale for every request following steps are taken in order given. One or more steps may be cancelled via <code>options</code>.</p>
 <p>Plugin:</p>
 <ol>
 <li>Looks path paramater such as <code>{lang}/member</code> for <code>/en_US/member</code>. Path parameter name can be set via <code>options.nameOf.param</code>.</li>
 <li>Looks query paramater such as <code>/member?lang=en_US</code>. Query parameter name can be set via <code>options.nameOf.query</code>.</li>
 <li>Looks <code>accept-language</code> header of request. Header name can be set via <code>options.nameOf.header</code>.</li>
 </ol>
-<p>###3. Match Requested locale</p>
-<p>Plugin tries to find first preferred locale which is available in application:</p>
+<h3>3. Match Requested locale</h3><p>Plugin tries to find first preferred locale which is available in application:</p>
 <ol>
 <li>If a match is found, locale is determined.</li>
 <li>If no match is found plugin either throws 404 if <code>options.throw404</code> set true. If path parameter (url) is wrong, it always throws 404 overriding <code>options.throw404</code></li>
 <li>If no 404 is thrown, default locale is used as a result. Default locale may set via <code>options.default</code>, otherwise first available locale is used as default.</li>
 </ol>
-<p>###4. Getter and Setter Methods</p>
-<p>Plugin adds getter and setter methods to request object. Name of the methods are set via <code>options.createGetter</code> and <code>options.createSetter</code> options. If those options are null or there are already methods available with given names in request object, no methods will be added. Default values are <code>request.i18n.getLocale</code> and <code>request.i18n.setLocale</code>.</p>
-<p>###5. Callback is called</p>
-<p>Callback is called with locale name as only parameter. Callback name is configured via <code>options.callback</code>. If callback name is given as a function reference, it is called directly. If it is given as string it is called as a chained method of request object. Default is &quot;i18n.setLocale&quot; which results as <code>request.i18n.setLocale</code>. It is possible to use a chained method name such as &quot;i18n.setLocale&quot; which results as <code>request.i18n.setLocale</code>.</p>
+<h3>4. Getter and Setter Methods</h3><p>Plugin adds getter and setter methods to request object. Name of the methods are set via <code>options.createGetter</code> and <code>options.createSetter</code> options. If those options are null or there are already methods available with given names in request object, no methods will be added. Default values are <code>request.i18n.getLocale</code> and <code>request.i18n.setLocale</code>.</p>
+<h3>5. Callback is called</h3><p>Callback is called with locale name as only parameter. Callback name is configured via <code>options.callback</code>. If callback name is given as a function reference, it is called directly. If it is given as string it is called as a chained method of request object. Default is &quot;i18n.setLocale&quot; which results as <code>request.i18n.setLocale</code>. It is possible to use a chained method name such as &quot;i18n.setLocale&quot; which results as <code>request.i18n.setLocale</code>.</p>
 <h1>Event Times</h1><p>Available locales are determined one time during server start plugin registration. Per request operations happens on event set by <code>options.onEvent</code>.</p>
 <h1>Examples</h1><h3>Use with default options:</h3><pre class="prettyprint source"><code>var server  = new hapi.Server(),
     path    = require('path');
@@ -208,7 +203,7 @@ server.register(plugins, function (err) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Wed Oct 07 2015 10:18:16 GMT+0300 (EEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Wed Oct 07 2015 10:27:10 GMT+0300 (EEST)
 </footer>
 
 <script> prettyPrint(); </script>
