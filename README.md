@@ -232,27 +232,27 @@ API
 
 ## Modules
 <dl>
-<dt><a href="#module_hapi-locale">hapi-locale</a></dt>
+<dt><a href="#module_'hapi-locale'">'hapi-locale'</a></dt>
 <dd></dd>
 <dt><a href="#module_exposed">exposed</a></dt>
 <dd><p>Exposed functions and attributes are listed under exposed name.
 To access those attributes <code>request.server.plugins[&#39;hapi-locale&#39;]</code> can be used.</p>
 </dd>
 </dl>
-<a name="module_hapi-locale"></a>
-## hapi-locale
+<a name="module_'hapi-locale'"></a>
+## 'hapi-locale'
 
-* [hapi-locale](#module_hapi-locale)
+* ['hapi-locale'](#module_'hapi-locale')
   * _static_
-    * [.register(server, options, next)](#module_hapi-locale.register)
+    * [.register(server, options, next)](#module_'hapi-locale'.register)
   * _inner_
-    * [~PluginOptions](#module_hapi-locale..PluginOptions) : <code>Object</code>
+    * [~PluginOptions](#module_'hapi-locale'..PluginOptions) : <code>Object</code>
 
-<a name="module_hapi-locale.register"></a>
-### hapi-locale.register(server, options, next)
+<a name="module_'hapi-locale'.register"></a>
+### &#x27;hapi-locale&#x27;.register(server, options, next)
 Hapi plugin function which adds i18n support to request and response objects.
 
-**Kind**: static method of <code>[hapi-locale](#module_hapi-locale)</code>  
+**Kind**: static method of <code>[&#x27;hapi-locale&#x27;](#module_'hapi-locale')</code>  
 <table>
   <thead>
     <tr>
@@ -272,11 +272,11 @@ Hapi plugin function which adds i18n support to request and response objects.
     </tr>  </tbody>
 </table>
 
-<a name="module_hapi-locale..PluginOptions"></a>
-### hapi-locale~PluginOptions : <code>Object</code>
+<a name="module_'hapi-locale'..PluginOptions"></a>
+### &#x27;hapi-locale&#x27;~PluginOptions : <code>Object</code>
 Plugin configuration options.
 
-**Kind**: inner typedef of <code>[hapi-locale](#module_hapi-locale)</code>  
+**Kind**: inner typedef of <code>[&#x27;hapi-locale&#x27;](#module_'hapi-locale')</code>  
 **Properties**
 
 <table>
