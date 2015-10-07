@@ -66,13 +66,14 @@ Plugin
 
 ### 2. Requested locale(s)
 
-One or more locale may be preferred in requests. To determine most wanted locale for every request following steps are taken in order given. One or more steps may be cancelled via `options`.
+One or more locale may be preferred in requests. To determine most wanted locale for every request following steps are taken in order set by `options.order`. One or more steps may be cancelled via setting null in related `options` or in `order`.
 
-Plugin:
+Plugin (in default order, which can be changed from `options.order`)
 
 1. Looks path paramater such as `{lang}/member` for `/en_US/member`. Path parameter name can be set via `options.nameOf.param`.
-2. Looks query paramater such as `/member?lang=en_US`. Query parameter name can be set via `options.nameOf.query`.
-3. Looks `accept-language` header of request. Header name can be set via `options.nameOf.header`.
+2. Looks cookie. Cookie name can be set via `options.nameOf.cookie`, cookie key to look in cookie can be set `options.nameOf.cookieKey`.
+3. Looks query paramater such as `/member?lang=en_US`. Query parameter name can be set via `options.nameOf.query`.
+4. Looks `accept-language` header of request. Header name can be set via `options.nameOf.header`.
 
 
 ### 3. Match Requested locale

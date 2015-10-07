@@ -66,13 +66,14 @@ Plugin
 
 ### 2. Requested locale(s)
 
-One or more locale may be preferred in requests. To determine most wanted locale for every request following steps are taken in order given. One or more steps may be cancelled via `options`.
+One or more locale may be preferred in requests. To determine most wanted locale for every request following steps are taken in order set by `options.order`. One or more steps may be cancelled via setting null in related `options` or in `order`.
 
-Plugin:
+Plugin (in default order, which can be changed from `options.order`)
 
 1. Looks path paramater such as `{lang}/member` for `/en_US/member`. Path parameter name can be set via `options.nameOf.param`.
-2. Looks query paramater such as `/member?lang=en_US`. Query parameter name can be set via `options.nameOf.query`.
-3. Looks `accept-language` header of request. Header name can be set via `options.nameOf.header`.
+2. Looks cookie. Cookie name can be set via `options.nameOf.cookie`, cookie key to look in cookie can be set `options.nameOf.cookieKey`.
+3. Looks query paramater such as `/member?lang=en_US`. Query parameter name can be set via `options.nameOf.query`.
+4. Looks `accept-language` header of request. Header name can be set via `options.nameOf.header`.
 
 
 ### 3. Match Requested locale
@@ -296,7 +297,7 @@ Plugin configuration options.
     </tr><tr>
     <td>configFile</td><td><code>string</code></td><td><code>&quot;package.json&quot;</code></td><td>Configuration file to get available locales.</td>
     </tr><tr>
-    <td>configKey</td><td><code>string</code></td><td><code>&quot;locales&quot;</code></td><td>Key to look in configuration file to get available locales.</td>
+    <td>configKey</td><td><code>string</code></td><td><code>&quot;locales&quot;</code></td><td>Key to look in configuration file to get available locales. May be nested key such as 'a.b.c'.</td>
     </tr><tr>
     <td>scan</td><td><code>Object</code></td><td></td><td>Scanning options to get available locales</td>
     </tr><tr>
@@ -310,19 +311,25 @@ Plugin configuration options.
     </tr><tr>
     <td>nameOf</td><td><code>Object</code></td><td></td><td>Name of the parameters to determine language.</td>
     </tr><tr>
-    <td>nameOf.param</td><td><code>Object</code></td><td><code>lang</code></td><td>Name of the path parameter to determine language. ie. /{lang}/account</td>
+    <td>nameOf.param</td><td><code>string</code></td><td><code>&quot;lang&quot;</code></td><td>Name of the path parameter to determine language. ie. /{lang}/account</td>
     </tr><tr>
-    <td>nameOf.query</td><td><code>Object</code></td><td><code>lang</code></td><td>Name of the query parameter to determine language. ie. /account?lang=tr_TR</td>
+    <td>nameOf.query</td><td><code>string</code></td><td><code>&quot;lang&quot;</code></td><td>Name of the query parameter to determine language. ie. /account?lang=tr_TR</td>
+    </tr><tr>
+    <td>nameOf.cookie</td><td><code>string</code></td><td><code>&quot;lang&quot;</code></td><td>Name of the cookie to determine language.</td>
+    </tr><tr>
+    <td>nameOf.cookieKey</td><td><code>string</code></td><td><code>&quot;lang&quot;</code></td><td>Name of the key to look inside cookie to determine language. May be nested key such as 'a.b.c'.</td>
     </tr><tr>
     <td>nameOf.header</td><td><code>Object</code></td><td><code>accept-language</code></td><td>Name of the header parameter to determine language.</td>
     </tr><tr>
+    <td>order</td><td><code>Array.&lt;string&gt;</code></td><td><code>[&#x27;params&#x27;, &#x27;cookie&#x27;, &#x27;query&#x27;, &#x27;headers&#x27;]</code></td><td>Order in which language determination process follows. First successful method returns requested language.</td>
+    </tr><tr>
     <td>throw404</td><td><code>boolean</code></td><td></td><td>Whether to throw 404 not found if locale is not found. Does not apply path parameters, it always throws 404.</td>
     </tr><tr>
-    <td>createGetterOn</td><td><code>string</code></td><td><code>&quot;getLocale&quot;</code></td><td>If not exists, creates a getter method with this name on request object to get current locale.</td>
+    <td>createGetterOn</td><td><code>string</code></td><td><code>&quot;getLocale&quot;</code></td><td>If not exists, creates a getter method with this name on request object to get current locale. May be nested path such as 'a.b.c'.</td>
     </tr><tr>
-    <td>createSetterOn</td><td><code>string</code></td><td><code>&quot;setLocale&quot;</code></td><td>If not exists, creates a setter method with this name on request object to set current locale.</td>
+    <td>createSetterOn</td><td><code>string</code></td><td><code>&quot;setLocale&quot;</code></td><td>If not exists, creates a setter method with this name on request object to set current locale. May be nested path such as 'a.b.c'.</td>
     </tr><tr>
-    <td>callback</td><td><code>function</code> | <code>string</code></td><td><code>setLocale</code></td><td>Callback method to set locale. If given as function called directly. If given as string called as a method of request object.</td>
+    <td>callback</td><td><code>function</code> | <code>string</code></td><td><code>setLocale</code></td><td>Callback method to set locale. If given as function called directly. If given as string called as a method of request object. May be nested path such as 'a.b.c'.</td>
     </tr><tr>
     <td>onEvent</td><td><code>string</code></td><td><code>&quot;onPreAuth&quot;</code></td><td>Event on which locale determination process is fired.</td>
     </tr>  </tbody>

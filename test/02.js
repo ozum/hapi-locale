@@ -52,7 +52,7 @@ describe('hapi-locale with config file', function() {
             method: "GET",
             url: "/locale",
             headers: {
-                "accept-language": "tr_TR"
+                "Accept-Language": "tr_TR"
             }
         };
 
@@ -150,6 +150,50 @@ describe('hapi-locale with options', function() {
 
         server.inject(options, function(response) {
             assert.deepEqual(response.result, { locale: 'fr_CA' });
+            done();
+        });
+    });
+});
+
+
+describe('hapi-locale with different order', function() {
+    "use strict";
+    var plugins = [
+        {
+            register: require('../index.js'),
+            options: {
+                order: ['query', 'params'],
+                configFile: path.join(__dirname, 'config-files', 'config-empty.json'),
+                scan: {
+                    path: path.join(__dirname, 'locales')
+                }
+            }
+        }
+    ];
+
+    var server = require('./hapi/create-server.js')(plugins);
+
+    it('should determine language from query', function (done) {
+        var options = {
+            method: "GET",
+            url: "/tr_TR/locale?lang=fr_FR"
+        };
+
+        server.inject(options, function(response) {
+            assert.deepEqual(response.result, { locale: 'fr_FR' });
+            done();
+        });
+    });
+
+
+    it('should return default language', function (done) {
+        var options = {
+            method: "GET",
+            url: "/tr_TR/locale?lang=NA_NA"
+        };
+
+        server.inject(options, function(response) {
+            assert.deepEqual(response.result, { locale: 'en' });
             done();
         });
     });
