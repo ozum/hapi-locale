@@ -94,6 +94,10 @@ Plugin adds getter and setter methods to request object. Name of the methods are
 
 Callback is called with locale name as only parameter. Callback name is configured via `options.callback`. If callback name is given as a function reference, it is called directly. If it is given as string it is called as a chained method of request object. Default is "i18n.setLocale" which results as `request.i18n.setLocale`. It is possible to use a chained method name such as "i18n.setLocale" which results as `request.i18n.setLocale`.
 
+Order and Prioritization
+========================
+By default this plugin looks URL Part (`request.params`), Cookie (`request.state`), Query String (`request.query`), Header (`request.headers`) in this order: 'params', 'cookie', 'query', 'headers'. If you wish to change this order you can set it with `options.order` array.  
+
 Event Times
 ===========
 Available locales are determined one time during server start plugin registration. Per request operations happens on event set by `options.onEvent`.
@@ -164,27 +168,30 @@ Examples
         {
             register: 'hapi-locale',
             options: {
-                locales             : [],
-                default             : null,
-                configFile          : path.join(rootDir, 'package.json'),
-                configKey           : 'locales',
-                scan                : {
-                    path        : path.join(rootDir, 'locales'),
-                    fileType    : 'json',
-                    directories : true,
-                    exclude     : ['templates', 'template.json']
-                },
-                nameOf              : {
-                    param       : 'lang',
-                    query       : 'lang',
-                    header      : 'accept-language'
-                },
-                throw404        : false,
-                createGetter        : 'i18n.getLocale',
-                createSetter        : 'i18n.setLocale',
-                callback            : 'i18n.setLocale',
-                onEvent             : 'onPreAuth'
-            };
+                 locales             : [],
+                 default             : null,
+                 configFile          : path.join(rootDir, 'package.json'),
+                 configKey           : 'locales',
+                 scan                : {
+                     path        : path.join(rootDir, 'locales'),
+                     fileType    : 'json',
+                     directories : true,
+                     exclude     : ['templates', 'template.json']
+                 },
+                 nameOf              : {
+                     param       : 'lang',
+                     query       : 'lang',
+                     cookie      : 'lang',
+                     cookieKey   : 'lang',
+                     header      : 'accept-language'
+                 },
+                 order           : ['params', 'cookie', 'query', 'headers'],
+                 throw404        : false,
+                 createGetterOn      : 'i18n.getLocale',
+                 createSetterOn      : 'i18n.setLocale',
+                 callback            : 'i18n.setLocale',
+                 onEvent             : 'onPreAuth'
+             }
         }
     ];
 
