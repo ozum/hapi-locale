@@ -453,49 +453,6 @@ var locales = request.server.plugins['hapi-locale'].getLocales(); // ['tr_TR', '
   * [~getLocales()](#module_exposed..getLocales) ⇒ <code>Array.&lt;string&gt;</code>
   * [~getDefaultLocale()](#module_exposed..getDefaultLocale) ⇒ <code>string</code>
   * [~getLocale(request, reply)](#module_exposed..getLocale) ⇒ <code>string</code>
-  * [~getLocales()](#module_exposed..getLocales) ⇒ <code>Array.&lt;string&gt;</code>
-  * [~getDefaultLocale()](#module_exposed..getDefaultLocale) ⇒ <code>string</code>
-  * [~getLocale(request, reply)](#module_exposed..getLocale) ⇒ <code>string</code>
-
-<a name="module_exposed..getLocales"></a>
-### exposed~getLocales() ⇒ <code>Array.&lt;string&gt;</code>
-Returns all available locales as an array.
-
-**Kind**: inner method of <code>[exposed](#module_exposed)</code>  
-**Returns**: <code>Array.&lt;string&gt;</code> - - Array of locales.  
-**Example**  
-```js
-var locales = request.server.plugins['hapi-locale'].getLocales(); // ['tr_TR', 'en_US'] etc.
-```
-<a name="module_exposed..getDefaultLocale"></a>
-### exposed~getDefaultLocale() ⇒ <code>string</code>
-Returns default locale.
-
-**Kind**: inner method of <code>[exposed](#module_exposed)</code>  
-**Returns**: <code>string</code> - - Default locale  
-<a name="module_exposed..getLocale"></a>
-### exposed~getLocale(request, reply) ⇒ <code>string</code>
-Returns requested language. Can be used if developer does not want to pollute request object and want to get locale manually.
-If no getLocale or similar method is available on request object, it may be best interest to store result elsewhere and use it during request's life instead of calling this function repetitively to prevent repeated calculations.
-If getMethod or similar method is available and set via `options.getter` this function uses it.
-
-**Kind**: inner method of <code>[exposed](#module_exposed)</code>  
-**Returns**: <code>string</code> - Locale  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>request</td><td><code>Object</code></td><td><p>Hapi.js request object</p>
-</td>
-    </tr><tr>
-    <td>reply</td><td><code>Object</code></td><td><p>Hapi.js reply object</p>
-</td>
-    </tr>  </tbody>
-</table>
 
 <a name="module_exposed..getLocales"></a>
 ### exposed~getLocales() ⇒ <code>Array.&lt;string&gt;</code>
@@ -734,49 +691,6 @@ var locales = request.server.plugins['hapi-locale'].getLocales(); // ['tr_TR', '
   * [~getLocales()](#module_exposed..getLocales) ⇒ <code>Array.&lt;string&gt;</code>
   * [~getDefaultLocale()](#module_exposed..getDefaultLocale) ⇒ <code>string</code>
   * [~getLocale(request, reply)](#module_exposed..getLocale) ⇒ <code>string</code>
-  * [~getLocales()](#module_exposed..getLocales) ⇒ <code>Array.&lt;string&gt;</code>
-  * [~getDefaultLocale()](#module_exposed..getDefaultLocale) ⇒ <code>string</code>
-  * [~getLocale(request, reply)](#module_exposed..getLocale) ⇒ <code>string</code>
-
-<a name="module_exposed..getLocales"></a>
-### exposed~getLocales() ⇒ <code>Array.&lt;string&gt;</code>
-Returns all available locales as an array.
-
-**Kind**: inner method of <code>[exposed](#module_exposed)</code>  
-**Returns**: <code>Array.&lt;string&gt;</code> - - Array of locales.  
-**Example**  
-```js
-var locales = request.server.plugins['hapi-locale'].getLocales(); // ['tr_TR', 'en_US'] etc.
-```
-<a name="module_exposed..getDefaultLocale"></a>
-### exposed~getDefaultLocale() ⇒ <code>string</code>
-Returns default locale.
-
-**Kind**: inner method of <code>[exposed](#module_exposed)</code>  
-**Returns**: <code>string</code> - - Default locale  
-<a name="module_exposed..getLocale"></a>
-### exposed~getLocale(request, reply) ⇒ <code>string</code>
-Returns requested language. Can be used if developer does not want to pollute request object and want to get locale manually.
-If no getLocale or similar method is available on request object, it may be best interest to store result elsewhere and use it during request's life instead of calling this function repetitively to prevent repeated calculations.
-If getMethod or similar method is available and set via `options.getter` this function uses it.
-
-**Kind**: inner method of <code>[exposed](#module_exposed)</code>  
-**Returns**: <code>string</code> - Locale  
-<table>
-  <thead>
-    <tr>
-      <th>Param</th><th>Type</th><th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-    <td>request</td><td><code>Object</code></td><td><p>Hapi.js request object</p>
-</td>
-    </tr><tr>
-    <td>reply</td><td><code>Object</code></td><td><p>Hapi.js reply object</p>
-</td>
-    </tr>  </tbody>
-</table>
 
 <a name="module_exposed..getLocales"></a>
 ### exposed~getLocales() ⇒ <code>Array.&lt;string&gt;</code>
