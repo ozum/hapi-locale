@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: index.js</title>
+    <title>JSDoc: Source: index-COPY.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: index.js</h1>
+    <h1 class="page-title">Source: index-COPY.js</h1>
 
     
 
@@ -30,7 +30,7 @@
 /**
  * @module 'hapi-locale'
  * @description
- * Configurable plugin for determine request language in hapi.js applications.
+ * Plugin module to use in hapi.js applications to determine requested language.
  */
 
 var Boom        = require('boom'),
@@ -310,7 +310,7 @@ function determineLocale(request, reply, options) {
 
     // If none of the requested locales are available: For wrong path params and throw404 option throw 404.
     if (requestedLocales.source.indexOf('params') === 0 || options.throw404) {
-        throw new Error('Requested localization "' + requestedLocales.locales.join(', ') + '" is not available.');
+        return reply( Boom.notFound('Requested localization "' + getRequestedLocales(request, options) + '" is not available.') );
     }
 
     return options.default;
@@ -325,19 +325,14 @@ function determineLocale(request, reply, options) {
 /**
  *
  * @param {Object}              request - hapi.js request object
- * @param {Function}            reply   - hapi.js reply object
+ * @param {Object}              reply   - hapi.js reply object
  * @param {PluginOptions}       options - Plugin configuration options.
  * @returns {*}
  * @private
  */
 function processRequest(options, request, reply) {
     "use strict";
-    try {
-        var locale = determineLocale(request, reply, options);
-    } catch(err) {
-        return reply(Boom.notFound(err));
-    }
-
+    var locale = determineLocale(request, reply, options);
 
     // Add getter to request if necessary.
     if (typeof options.getter === 'string' &amp;&amp; options.getter !== '' &amp;&amp; options.createAccessorsIfNotExists &amp;&amp; !lodash.has(request, options.getter)) {
@@ -422,12 +417,7 @@ exports.register = function(server, options, next) {
      * @returns {string}    Locale
      */
     server.expose('getLocale', function getLocale(request, reply) {
-        try {
-            return options.getter ? lodash.get(request, options.getter)() : determineLocale(request, reply, options);
-        } catch(err) {
-            return null;
-        }
-
+        return options.getter ? lodash.get(request, options.getter)() : determineLocale(request, reply, options);
     });
 
     server.ext(options.onEvent, processRequest.bind(undefined, options)); //function(request, reply) { return processRequest(request, reply, options) } );

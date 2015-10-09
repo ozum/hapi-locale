@@ -1,6 +1,6 @@
 hapi-locale
 ===========
-Hapi.js plugin for helping to determine requested locale using configuration. It is used by hapi18n plugin.
+Configurable plugin for determine request language in hapi.js applications.
 
 **This module is in alpha version. Incompatible changes may happen in future versions. Providing options explicitly and not using default values may be a wise choice**
 
@@ -87,7 +87,7 @@ Plugin tries to find first preferred locale which is available in application:
 
 ### 4. Getter and Setter Methods
 
-Plugin adds getter and setter methods to request object. Name of the methods are set via `options.createGetter` and `options.createSetter` options. If those options are null or there are already methods available with given names in request object, no methods will be added. Default values are `request.i18n.getLocale` and `request.i18n.setLocale`.
+Plugin uses getter and setter methods. It creates them if `options.createAccessorsIfNotExists` is true and they do not exist. Name of the methods are set via `options.getter` and `options.setter` options. Default values are `i18n.getLocale` and `i18n.setLocale`.
 
 
 ### 5. Callback is called
@@ -107,7 +107,7 @@ Exposed Functions & Attributes
 This plugin exposes some functions and attributes using server.expose mechanism of hapi.js. They are documented under API section's exposed part. See there for details.
 
     // This function may be used to access requested locale manually without polluting request object.
-    var locale  = request.server.plugins['hapi-locale'].getLocale(request, reply);
+    var locale  = request.server.plugins['hapi-locale'].getLocale(request, reply); // 'tr_TR'
         
     var locales = request.server.plugins['hapi-locale'].getLocales();   // ['tr_TR', 'en_US'] etc.
     
@@ -187,8 +187,9 @@ Examples
                  },
                  order           : ['params', 'cookie', 'query', 'headers'],
                  throw404        : false,
-                 createGetterOn      : 'i18n.getLocale',
-                 createSetterOn      : 'i18n.setLocale',
+                 getter          : 'i18n.getLocale',
+                 setter          : 'i18n.setLocale',
+                 createAccessorsIfNotExists: true,
                  callback            : 'i18n.setLocale',
                  onEvent             : 'onPreAuth'
              }
@@ -223,7 +224,7 @@ Examples
 
 ### Routes
 
-| **ROUTE**           | **REQUEST**                   | **HEADER**                | **LOCALE**      | **REASON**
+| **ROUTE**           | **REQUEST**                   | **HEADER**                | **LOCALE**      | **REASON (Default Config)**
 |---------------------|-------------------------------|---------------------------|-----------------|-----------------------|
 | /{lang}/account     | GET /en_US/account            |                           | en_US           | Path                  |
 | /{lang}/account     | GET /tr_TR/account?lang=fr_FR | accept-language=jp_JP     | tr_TR           | Path has more priority|

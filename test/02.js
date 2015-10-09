@@ -197,4 +197,17 @@ describe('hapi-locale with different order', function() {
             done();
         });
     });
+
+
+    it('should throw 404', function (done) {
+        var options = {
+            method: "GET",
+            url: "/NA_NA/locale"
+        };
+
+        server.inject(options, function(response) {
+            assert.deepEqual(response.statusCode, 404);
+            done();
+        });
+    });
 });

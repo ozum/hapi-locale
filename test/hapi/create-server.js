@@ -29,11 +29,25 @@ module.exports = function defineRoutes(plugins) {
             method: "GET",
             handler: function(request, reply) {
                 var plugin = request.server.plugins['hapi-locale'];
-                reply({
+                return reply({
                     getLocales: plugin.getLocales(),
                     getLocale: plugin.getLocale(request, reply),
                     getDefaultLocale: plugin.getDefaultLocale()
                 });
+
+            }
+        },
+        {
+            path: "/{lang}/exposed",
+            method: "GET",
+            handler: function(request, reply) {
+                var plugin = request.server.plugins['hapi-locale'];
+                return reply({
+                    getLocales: plugin.getLocales(),
+                    getLocale: plugin.getLocale(request, reply),
+                    getDefaultLocale: plugin.getDefaultLocale()
+                });
+
             }
         }
     ]);
