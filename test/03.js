@@ -1,10 +1,15 @@
 /*jslint node: true, nomen: true */
 /*global describe, it, before, beforeEach, after, afterEach */
 
-var assert  = require('chai').assert,
+var Lab     = require('lab'),
+    Code    = require('code'),
     Hoek    = require('hoek'),
     path    = require('path');
 
+var lab         = exports.lab = Lab.script();
+var describe    = lab.describe;
+var it          = lab.it;
+var expect      = Code.expect;
 
 describe('hapi-locale', function() {
     "use strict";
@@ -30,7 +35,7 @@ describe('hapi-locale', function() {
         };
 
         server.inject(options, function (response) {
-            assert.deepEqual(response.result, {
+            expect(response.result).to.deep.equal({
                 getLocales: ['en_US', 'tr_TR', 'fr_FR'],
                 getLocale: 'tr_TR',
                 getDefaultLocale: 'en_US',
@@ -67,7 +72,7 @@ describe('hapi-locale', function() {
         };
 
         server.inject(options, function (response) {
-            assert.deepEqual(response.result, {
+            expect(response.result).to.deep.equal(response.result, {
                 getLocales: [ 'en_US', 'tr_TR', 'fr_FR' ],
                 getLocale: 'tr_TR',
                 getDefaultLocale: 'en_US',
@@ -83,7 +88,7 @@ describe('hapi-locale', function() {
         };
 
         server.inject(options, function (response) {
-            assert.equal(response.result.getLocale, null);
+            expect(response.result.getLocale).to.equal(undefined);
             done();
         });
     });

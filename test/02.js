@@ -1,10 +1,14 @@
 /*jslint node: true, nomen: true */
-/*global describe, it, before, beforeEach, after, afterEach */
 
-var assert  = require('chai').assert,
+var Lab     = require('lab'),
+    Code    = require('code'),
     Hoek    = require('hoek'),
     path    = require('path');
 
+var lab         = exports.lab = Lab.script();
+var describe    = lab.describe;
+var it          = lab.it;
+var expect      = Code.expect;
 
 describe('hapi-locale with config file', function() {
     "use strict";
@@ -30,7 +34,7 @@ describe('hapi-locale with config file', function() {
         };
 
         server.inject(options, function(response) {
-            assert.deepEqual(response.result, { locale: 'tr_TR' });
+            expect(response.result).to.deep.equal({ locale: 'tr_TR' });
             done();
         });
     });
@@ -42,7 +46,7 @@ describe('hapi-locale with config file', function() {
         };
 
         server.inject(options, function(response) {
-            assert.deepEqual(response.result, { locale: 'fr_FR' });
+            expect(response.result).to.deep.equal( { locale: 'fr_FR' });
             done();
         });
     });
@@ -57,7 +61,7 @@ describe('hapi-locale with config file', function() {
         };
 
         server.inject(options, function(response) {
-            assert.deepEqual(response.result, { locale: 'tr_TR' });
+            expect(response.result).to.deep.equal({ locale: 'tr_TR' });
             done();
         });
     });
@@ -90,7 +94,7 @@ describe('hapi-locale with scan dir', function() {
         };
 
         server.inject(options, function(response) {
-            assert.deepEqual(response.result, { locale: 'jp_JP' });
+            expect(response.result).to.deep.equal({ locale: 'jp_JP' });
             done();
         });
     });
@@ -102,7 +106,7 @@ describe('hapi-locale with scan dir', function() {
         };
 
         server.inject(options, function(response) {
-            assert.deepEqual(response.result, { locale: 'fr_FR' });
+            expect(response.result).to.deep.equal({ locale: 'fr_FR' });
             done();
         });
     });
@@ -117,13 +121,12 @@ describe('hapi-locale with scan dir', function() {
         };
 
         server.inject(options, function(response) {
-            assert.deepEqual(response.result, { locale: 'tr_TR' });
+            expect(response.result).to.deep.equal({ locale: 'tr_TR' });
             done();
         });
     });
 
 });
-
 
 
 
@@ -149,7 +152,7 @@ describe('hapi-locale with options', function() {
         };
 
         server.inject(options, function(response) {
-            assert.deepEqual(response.result, { locale: 'fr_CA' });
+            expect(response.result).to.deep.equal({ locale: 'fr_CA' });
             done();
         });
     });
@@ -180,7 +183,7 @@ describe('hapi-locale with different order', function() {
         };
 
         server.inject(options, function(response) {
-            assert.deepEqual(response.result, { locale: 'fr_FR' });
+            expect(response.result).to.deep.equal({ locale: 'fr_FR' });
             done();
         });
     });
@@ -193,11 +196,23 @@ describe('hapi-locale with different order', function() {
         };
 
         server.inject(options, function(response) {
-            assert.deepEqual(response.result, { locale: 'en' });
+            expect(response.result).to.deep.equal({ locale: 'en' });
             done();
         });
     });
 
+    it('should define setter', function (done) {
+        var options = {
+            method: "GET",
+            url: "/getter-setter"
+        };
+
+        // Handler set locale as ru_RU.
+        server.inject(options, function(response) {
+            expect(response.result).to.deep.equal({ locale: 'ru_RU' });
+            done();
+        });
+    });
 
     it('should throw 404', function (done) {
         var options = {
@@ -206,7 +221,7 @@ describe('hapi-locale with different order', function() {
         };
 
         server.inject(options, function(response) {
-            assert.deepEqual(response.statusCode, 404);
+            expect(response.statusCode).to.equal(404);
             done();
         });
     });

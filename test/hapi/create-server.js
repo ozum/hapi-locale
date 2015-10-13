@@ -25,6 +25,16 @@ module.exports = function defineRoutes(plugins) {
             }
         },
         {
+            path: "/getter-setter",
+            method: "GET",
+            handler: function(request, reply) {
+                request.i18n.setLocale('ru_RU');
+                reply({
+                    locale: request.i18n.getLocale()
+                });
+            }
+        },
+        {
             path: "/exposed",
             method: "GET",
             handler: function(request, reply) {

@@ -407,6 +407,10 @@ History & Notes
 ================
 Note: Simple documentation updates are not listed here.
 
+#### 0.4.3 / 2015-10-13
+* Changed: Tests ported from Mocha/Chai to Lab/Code.
+* Fixed: Created setter function does not work.
+
 #### 0.4.0 / 2015-10-09
 
 * Changed: `options.createGetterOn` and `options.createSetterOn` are renamed as `options.getter` and `options.setter`.
