@@ -53,11 +53,11 @@ Most Important Options:
 The options below are most important ones, because they change/write to request object and may cause undesirable results if configured unsutiable to your needs.   
 
 | Option                    | Default Value  | Description
-|------------------------------------------------------------------------------------------------------------
-| `options.createAccessors` | true           | Enables creating getter and setter methods in request object. If set to false it is assumed getter and setter methods are already available.
-| `getter`                  | i18n.getLocale | Getter method in request object to get current locale. (Created if `options.createAccessors` is true.
-| `setter`                  | i18n.setLocale | Setter method in request object to set current locale. (Created if `options.createAccessors` is true.
-| `attribute`               | i18n.locale    | Key in request object which will be used to store locale name. (Created if `options.createAccessors` is true.
+|---------------------------|----------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| `options.createAccessors` | true           | Enables creating getter and setter methods in request object. If set to false it is assumed getter and setter methods are already available. |
+| `getter`                  | i18n.getLocale | Getter method in request object to get current locale. (Created if `options.createAccessors` is true.                                        |
+| `setter`                  | i18n.setLocale | Setter method in request object to set current locale. (Created if `options.createAccessors` is true.                                        |
+| `attribute`               | i18n.locale    | Key in request object which will be used to store locale name. (Created if `options.createAccessors` is true.                                |
 
 Please see all options below in hapiLocale~PluginOptions in API section 
 
