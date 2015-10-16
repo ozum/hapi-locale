@@ -362,8 +362,6 @@ Plugin configuration options.
     </tr><tr>
     <td>createAccessors</td><td><code>boolean</code></td><td><code>true</code></td><td>Enables creating getter and setter methods in request object.</td>
     </tr><tr>
-    <td>callback</td><td><code>function</code> | <code>string</code> | <code>null</code></td><td><code>setLocale</code></td><td>Callback method with signature function(locale) to set locale. If given as function called directly. If given as string called as a method of request object. May be nested path such as 'a.b.c'.</td>
-    </tr><tr>
     <td>onEvent</td><td><code>string</code></td><td><code>&quot;onPreAuth&quot;</code></td><td>Event on which locale determination process is fired.</td>
     </tr>  </tbody>
 </table>
