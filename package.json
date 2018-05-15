@@ -25,11 +25,11 @@
     "accept-language-parser": "^1.0.2",
     "boom": "^2.9.0",
     "joi": "^6.9.0",
-    "lodash": "^3.10.1"
+    "lodash": "^4.17.10"
   },
   "devDependencies": {
     "code": "^1.5.0",
-    "hapi": "^10.5.0",
+    "hapi": "^17.4.0",
     "hoek": "^2.16.3",
     "lab": "^6.2.0",
     "rewire": "^2.3.4",
