@@ -1,6 +1,6 @@
 {
   "name": "hapi-locale",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Configurable plugin for determine request language in hapi.js applications.",
   "main": "index.js",
   "repository": {
