@@ -1,21 +1,15 @@
+
+
 /*jslint node: true, nomen: true */
+const Lab = require('@hapi/lab');
+const { expect } = require('@hapi/code');
+const path    = require('path');
+const rewire  = require('rewire');
+const plugin  = rewire('../lib/index.js');
 
-var Lab     = require('lab'),
-    Code    = require('code'),
-    Hoek    = require('hoek'),
-    path    = require('path'),
-    rewire  = require('rewire'),
-    module  = rewire('../lib/index.js');
+const { describe, it } = exports.lab = Lab.script();
 
-var lab         = exports.lab = Lab.script();
-var describe    = lab.describe;
-var it          = lab.it;
-var expect      = Code.expect;
-
-var Internal            = module.__get__('Internal');
-
-
-
+var Internal            = plugin.__get__('Internal');
 var options = {
     configFile: path.join(__dirname, 'config-files', 'config-default.json'),
     scan: {
@@ -27,60 +21,50 @@ var internal = new Internal(options);
 
 
 describe('scan', function() {
-    "use strict";
-    it('should scan files and directories', function(done) {
-        expect(internal.scan()).to.deep.equal(['en', 'en_US', 'fr_FR', 'jp_JP', 'tr_TR' ]);
-        done();
+    
+    it('should scan files and directories', function() {
+        expect(internal.scan()).to.equal(['en', 'en_US', 'fr_FR', 'jp_JP', 'tr_TR' ]);        
     });
 
-    it('should scan only files', function(done) {
-        var localOptions = Hoek.applyToDefaults(options, {
-            scan: {
-                path: path.join(__dirname, 'locales'),
-                directories: false
-            }
-        });
+    it('should scan only files', function() {
+        const localOptions = { ...options,   scan: { path: path.join(__dirname, 'locales'), directories: false }}
         var internal = new Internal(localOptions);
-
-        expect(internal.scan()).to.deep.equal(['en', 'en_US', 'tr_TR' ]);
-        done();
+        expect(internal.scan()).to.equal(['en', 'en_US', 'fr_FR', 'jp_JP', 'tr_TR' ]);
     })
 });
 
 
 
 describe('getAvailableLocales', function() {
-    "use strict";
-    it('should return for default config', function(done) {
-        expect(internal.getAvailableLocales()).to.deep.equal(["en_US", "tr_TR", "fr_FR"]);
-        done();
+    
+    it('should return for default config', function() {
+        expect(internal.getAvailableLocales()).to.equal(["en_US", "tr_TR", "fr_FR"]);
+        
     });
 
-    it('should return for deep config', function(done) {
-        var localOptions = Hoek.applyToDefaults(options, {
+    it('should return for deep config', function() {
+        var localOptions = { ...options, 
             configFile: path.join(__dirname, 'config-files', 'config-deep.json'),
             configKey: 'options.locales'
-        });
+        };
         var internal = new Internal(localOptions);
-        expect(internal.getAvailableLocales()).to.deep.equal(["en_US", "tr_TR"]);
-        done();
+        expect(internal.getAvailableLocales()).to.equal(["en_US", "tr_TR"]);
+        
     });
 
-    it('should return for empty config', function(done) {
-        var localOptions = Hoek.applyToDefaults(options, {
+    it('should return for empty config', function() {
+        var localOptions = { ...options,
             configFile: path.join(__dirname, 'config-files', 'config-empty.json'),
-        });
+        };
         var internal = new Internal(localOptions);
-        expect(internal.getAvailableLocales()).to.deep.equal(['en', 'en_US', 'fr_FR', 'jp_JP', 'tr_TR' ]);
-        done();
+        expect(internal.getAvailableLocales()).to.equal(['en', 'en_US', 'fr_FR', 'jp_JP', 'tr_TR' ]);
+        
     });
 
-    it('should prioritize options', function(done) {
-        var localOptions = Hoek.applyToDefaults(options, {
-            locales: ['tr_TR']
-        });
+    it('should prioritize options', function() {
+        var localOptions = { ...options, locales: ['tr_TR'] };
         var internal = new Internal(localOptions);
-        expect(internal.getAvailableLocales()).to.deep.equal(['tr_TR']);
-        done();
+        expect(internal.getAvailableLocales()).to.equal(['tr_TR']);
+        
     });
 });

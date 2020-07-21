@@ -9,7 +9,7 @@
   },
   "scripts": {
     "doc": "rm -R doc; jsdoc -c jsdoc-conf.json README-JSDOC.md;    rm -f README.md;    jsdoc2md --no-gfm --src \"lib/**/*\" >JSDOC.md;    cat README-JSDOC.md JSDOC.md History.md LICENSE > README.md;    rm -r -f JSDOC.md;",
-    "test": "lab"
+    "test": "lab --globals BigUint64Array,BigInt64Array,BigInt,Reflect,SharedArrayBuffer,Atomics,WebAssembly,URL,URLSearchParams,TextEncoder,TextDecoder,queueMicrotask"
   },
   "keywords": [
     "hapi",
@@ -22,20 +22,19 @@
   "author": "Özüm Eldoğan",
   "license": "MIT",
   "dependencies": {
-    "accept-language-parser": "^1.0.2",
-    "boom": "^2.9.0",
-    "joi": "^6.9.0",
-    "lodash": "^4.17.10"
+    "@hapi/boom": "^9.1.0",
+    "@hapi/joi": "^17.1.1",
+    "accept-language-parser": "^1.5.0",
+    "lodash": "^4.17.19"
   },
   "devDependencies": {
-    "code": "^1.5.0",
-    "hapi": "^17.4.0",
-    "hoek": "^2.16.3",
-    "lab": "^6.2.0",
-    "rewire": "^2.3.4",
+    "@hapi/code": "^8.0.1",
+    "@hapi/hapi": "^19.2.0",
+    "@hapi/lab": "^22.0.4",
+    "rewire": "^5.0.0",
     "zoo-jsdoc": "0.0.1"
   },
   "engines": {
-    "node": ">=4.1.0"
+    "node": ">=8.3.0"
   }
 }

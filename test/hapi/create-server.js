@@ -1,30 +1,28 @@
-var hapi        = require('hapi'),
-    rewire      = require('rewire'),
-    plugin      = rewire('../../lib/index.js'),
-    lodash      = require('lodash');
+"use strict";
 
-var defaultOptions  = plugin.__get__('defaultOptions'),
-    getter          = defaultOptions.getter,
-    setter          = defaultOptions.setter;
+const Hapi      = require("@hapi/hapi");
+const rewire    = require('rewire');
+const plugin    = rewire('../../lib/index.js');
+const lodash    = require('lodash');
+
+const defaultOptions  = plugin.__get__('defaultOptions');
+const getter          = defaultOptions.getter;
+const setter          = defaultOptions.setter;
 
 
-
-module.exports = function defineRoutes(plugins) {
-    "use strict";
-    var server = new hapi.Server();
-
-    server.connection({
-        host: 'localhost',
-        port: 8080
+exports.init = async (plugins) => {
+    const server = Hapi.server({
+        port: 8000,
+        host: 'localhost'
     });
-
+    
     server.route([
         {
             path: "/locale",
             method: "GET",
             handler: function(request, reply) {
                 var getLocale = lodash.get(request, getter);
-                reply({ locale: getLocale() });
+                return { locale: getLocale() };
             }
         },
         {
@@ -32,7 +30,7 @@ module.exports = function defineRoutes(plugins) {
             method: "GET",
             handler: function(request, reply) {
                 var getLocale = lodash.get(request, getter);
-                reply({ locale: getLocale() });
+                return { locale: getLocale() };
             }
         },
         {
@@ -42,9 +40,9 @@ module.exports = function defineRoutes(plugins) {
                 var getLocale = lodash.get(request, getter);
                 var setLocale = lodash.get(request, setter);
                 setLocale('ru_RU');
-                reply({
+                return {
                     locale: getLocale()
-                });
+                };
             }
         },
         {
@@ -52,12 +50,12 @@ module.exports = function defineRoutes(plugins) {
             method: "GET",
             handler: function(request, reply) {
                 var plugin = request.server.plugins['hapi-locale'];
-                return reply({
+                return {
                     getLocales: plugin.getLocales(),
                     getLocale: plugin.getLocale(request, reply),
                     getDefaultLocale: plugin.getDefaultLocale()
-                });
-
+                };
+    
             }
         },
         {
@@ -65,25 +63,25 @@ module.exports = function defineRoutes(plugins) {
             method: "GET",
             handler: function(request, reply) {
                 var plugin = request.server.plugins['hapi-locale'];
-                return reply({
+                return {
                     getLocales: plugin.getLocales(),
                     getLocale: plugin.getLocale(request, reply),
                     getDefaultLocale: plugin.getDefaultLocale()
-                });
-
+                };
+    
             }
         }
     ]);
 
+    await server.register(plugins);
 
-    server.register(plugins, function (err) {
-        if (err) throw err;
-        if (!module.parent) {
-            server.start(function () {
-                console.log('Server started at: ' + server.info.uri);
-            });
-        }
-    });
-
+    await server.initialize();
     return server;
 };
+
+
+
+process.on('unhandledRejection', (err) => {
+    console.log(err);
+    process.exit(1);
+});
