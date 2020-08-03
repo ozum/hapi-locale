@@ -4,14 +4,14 @@ Configurable plugin to determine request language in hapi.js applications.
 
 Description
 ===========
-This plugin determines requested loclale by looking followings: (Order can be changed or skipped via `options.order`)
+This plugin determines requested loclale by looking at the following: (Order can be changed or skipped via `options.order`)
 
 * URL parameter,
 * Cookie,
 * Query parameter,
 * HTTP header.
 
-Optionally creates getter and setters or uses already available ones in request. Calls setter method with requested locale. Also provide plugin methods such as `server.plugins['hapi-locale'].getLocale()`;
+Optionally creates getter and setters or uses already available ones in request. Calls setter method with requested locale. Also provides plugin methods such as `server.plugins['hapi-locale'].getLocale()`;
 
 Nearly every aspect of the plugin can be configured with options. Sensible defaults are tried to be provided.
 
@@ -43,14 +43,14 @@ In handlers:
 
 WHY
 ===
-It is easy to determine locale in hapi.js. So why is this plugin wirtten? We are tired of writing repetitive code for every application/module and decided to export this functionality as a hapi plugin.
+It is easy to determine locale in hapi.js. So why is this plugin written? We are tired of writing repetitive code for every application/module and decided to export this functionality as a hapi plugin.
 
 Also we make it tested and documented.
 
 Most Important Options:
 =======================
 
-The options below are most important ones, because they change/write to request object and may cause undesirable results if configured unsutiable to your needs.   
+The options below are the most important ones, because they change/write the request object and may cause undesirable results if not properly configured to suit your needs.   
 
 | Option            | Default Value  | Description
 |-------------------|----------------|----------------------------------------------------------------------------------------------------------------------------------------------|
@@ -82,14 +82,14 @@ Available locales are determined with methods in the following order. If one of 
 
 Plugin
  
-1. Looks locales in plugin options `options.locales`. Set empty `[]` to skip.
+1. Looks locales up in plugin options `options.locales`. Set empty `[]` to skip.
 2. Looks `package.json` or other json file set by `options.configFile` and `options.configKey`. Key may be set with nested format such as 'pref.of.my.app.locales'. Set `null` to skip.
 3. Scans path given by `options.scan.path` excluding files and directories given by `options.path.exclude`. Set `null` to skip.
 
 
 ### 2. Requested locale(s)
 
-One or more locale may be preferred in requests. To determine most wanted locale for every request following steps are taken in order set by `options.order`. One or more steps may be cancelled via setting null in related `options` or not including to `options.order`.
+One or more locale may be preferred in requests. To determine the most wanted locale for every request the following steps are taken in order set by `options.order`. One or more steps may be cancelled via setting null in related `options` or not including to `options.order`.
 
 Plugin (in default order, which can be changed from `options.order`)
 
@@ -265,7 +265,7 @@ API
 ## Modules
 <dl>
 <dt><a href="#module_'hapi-locale'">'hapi-locale'</a></dt>
-<dd><p>Configurable plugin for determine request language in hapi.js applications.</p>
+<dd><p>Configurable plugin to determine request language in hapi.js applications.</p>
 </dd>
 <dt><a href="#module_exposed">exposed</a></dt>
 <dd><p>Exposed functions and attributes are listed under exposed name.
@@ -274,7 +274,7 @@ To access those attributes <code>request.server.plugins[&#39;hapi-locale&#39;]</
 </dl>
 <a name="module_'hapi-locale'"></a>
 ## 'hapi-locale'
-Configurable plugin for determine request language in hapi.js applications.
+Configurable plugin to determine request language in hapi.js applications.
 
 
 * ['hapi-locale'](#module_'hapi-locale')
