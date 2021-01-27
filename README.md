@@ -43,7 +43,7 @@ In handlers:
 
 WHY
 ===
-It is easy to determine locale in hapi.js. So why is this plugin wirtten? We are tired of writing repetitive code for every application/module and decided to export this functionality as a hapi plugin.
+It is easy to determine locale in hapi.js. So why is this plugin written? We are tired of writing repetitive code for every application/module and decided to export this functionality as a hapi plugin.
 
 Also we make it tested and documented.
 
